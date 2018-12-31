@@ -1,6 +1,6 @@
 ---
 
-- name: Create a login user
+- name: Create a Web user with sudo access
   hosts: all
   remote_user: root
   tasks:
