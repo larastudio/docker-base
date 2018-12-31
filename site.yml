@@ -9,7 +9,8 @@
             name: Web User
             uid: 1000
             group: web
-            password: xxxxx               (a hash created with: mkpasswd)
+            # a hash created with: mkpasswd `gem install mkpasswd` and "mkpasswd -m sha-512 "password" | sed 's/\$/\\$/g'"")
+            password: \$6\$I4Od8ucVS/Xl1s9c\$wv0jZNco8O8AG.pnFlHRDOXV2Bo46YB3hQIwHdfFjp0nE/1T7lN7KAWOmHhJrk/YMoYtCC66LsifPUUcf/qg71
             groups: ["sudo", "www-data"]
             append: no                    (only append groups, leave others)
             home_mode: "0750"
@@ -57,7 +58,7 @@
     docker_yum_repo_enable_test: 0
 
     # A list of users who will be added to the docker group.
-    docker_users: []
+    docker_users: [web]
     
     ufw_rules:
       - { port: 22, rule: allow, comment: 'Allow SSH' }
