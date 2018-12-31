@@ -1,5 +1,16 @@
 ---
 
+# ansible-playbook server.yml --syntax-check
+# ansible -v all -m ping -e 'ansible_python_interpreter=/usr/bin/python3'
+
+- name: Set ansible_python_interpreter
+  hosts: all
+  gather_facts: false
+  become: yes
+  roles:
+    - { role: python_interpreter, tags: [always] }
+
+
 - name: Create a Web user with sudo access
   hosts: all
   remote_user: root
