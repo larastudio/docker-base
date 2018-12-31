@@ -3,50 +3,75 @@
 - name: Install Docker, Docker Compose and Sudo User
   hosts: all
   remote_user: root
-  vars:
-    groups_to_create:
-      - name: ansibletestgroup
-        gid: 4000
+  vars:    
     users:
-      - name: Deployer and Sudo User
-        username: web
-        uid: 2222
-        groups: [users, bin]
-        # shell: /bin/sh
-        profile: |
-          alias ll='ls -lah'
-          alias cp='cp -iv'
-        ssh_key:
-          - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVpUJQCOaPg3p5xro9e+1fkGRWNOGrrExiKMqTE91Fwu349bxfMnMzRS0PAERouR9EEL+Ee4Yzhav/uNc35eCtXzACtluXnAncMrQj6pM3IqASynhvXTygHljmcMbBSDQtLrTZeW+YzIcOgk5UM1yBi26WoUYva2aCr9IRvKdYreAK08OiMdZedpOye0ZdvIYJGcyITwc6YMmrAhP7jZlrk/mDEkf2a4eBp+475o7MJtaC9npqYkToM8vqvx5AGEKqXt7/f1/paOY7KsR+VGPQy6k2RkXjWBsXPesZ3d3XLZHE60wAk0EsuJO8A25+uWSB6ILQeRSYYmGea/WIf6kd noone@throwaway.example.com"
-        
-        # Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
-        docker_edition: 'ce'
-        docker_package: "docker-{{ docker_edition }}"
-        docker_package_state: present
+        - username: web              (required)
+            name: Web User
+            uid: 1000
+            group: web
+            password: xxxxx               (a hash created with: mkpasswd)
+            groups: ["sudo", "www-data"]
+            append: no                    (only append groups, leave others)
+            home_mode: "0750"
+            home_create: yes
+            home: /path/to/user/home
+            home_files:
+            - "/path/to/web/home/.bashrc"
+            - "/path/to/web/home/.bash_profile"
+            system: no
+            authorized_keys:
+            - "xxx"
+            - "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+            authorized_keys_exclusive: yes
+            ssh_key_type: rsa
+            ssh_key_bits: 2048
+            ssh_key_password: ""
+            ssh_key_generate: no
+            ssh_key: "xxx" or "{{ lookup('file', '~/.ssh/id_rsa') }}"
+            shell: /bin/bash
+            update_password: always
+    
+    # Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+    docker_edition: 'ce'
+    docker_package: "docker-{{ docker_edition }}"
+    docker_package_state: present
 
-        # Service options.
-        docker_service_state: started
-        docker_service_enabled: true
-        docker_restart_handler_state: restarted
+    # Service options.
+    docker_service_state: started
+    docker_service_enabled: true
+    docker_restart_handler_state: restarted
 
-        # Docker Compose options.
-        docker_install_compose: true
-        docker_compose_version: "1.22.0"
-        docker_compose_path: /usr/local/bin/docker-compose
+    # Docker Compose options.
+    docker_install_compose: true
+    docker_compose_version: "1.22.0"
+    docker_compose_path: /usr/local/bin/docker-compose
 
-        # Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
-        docker_apt_release_channel: stable
-        docker_apt_arch: amd64
-        docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
-        docker_apt_ignore_key_error: true
+    # Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+    docker_apt_release_channel: stable
+    docker_apt_arch: amd64
+    docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+    docker_apt_ignore_key_error: true
 
-        # Used only for RedHat/CentOS/Fedora.
-        docker_yum_repo_url: https://download.docker.com/linux/{{ (ansible_distribution == "Fedora") | ternary("fedora","centos") }}/docker-{{ docker_edition }}.repo
-        docker_yum_repo_enable_edge: 0
-        docker_yum_repo_enable_test: 0
+    # Used only for RedHat/CentOS/Fedora.
+    docker_yum_repo_url: https://download.docker.com/linux/{{ (ansible_distribution == "Fedora") | ternary("fedora","centos") }}/docker-{{ docker_edition }}.repo
+    docker_yum_repo_enable_edge: 0
+    docker_yum_repo_enable_test: 0
 
-        # A list of users who will be added to the docker group.
-        docker_users: []
+    # A list of users who will be added to the docker group.
+    docker_users: []
+    
+    ufw_rules:
+      - { port: 22, rule: allow, comment: 'Allow SSH' }
+      - { port: 80, rule: allow }
+      - { from_ip: '127.0.0.1/8', comment: 'Allow localhost' }
+      - { from_ip: '127.0.42.0/24', rule: deny }
+    ufw_default_forward_policy: ACCEPT
+    ufw_logging: full
+    ufw_applications:
+     - { name: "OpenSSH" }
+
   roles:
+    - weareinteractive.users
     - geerlingguy.docker
-    - ansible-users
+    - weareinteractive.ufw
+    
