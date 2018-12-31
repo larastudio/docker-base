@@ -4,7 +4,7 @@
     hosts: all
     remote_user: root
     user:
-    name: web
+    name: "{{web_user}}"
     # # a hash created with: mkpasswd `gem install mkpasswd` and "mkpasswd -m sha-512 "password" | sed 's/\$/\\$/g'
     password: "{{ upassword | password_hash('sha512') }}"
     groups: # Empty by default, here we give it some groups
@@ -15,6 +15,9 @@
     system: no             # Defaults to no
     createhome: yes        # Defaults to yes
     home: /home/web  # Defaults to /home/<username>
+    authorized_key: 
+        user: "{{web_user}}"
+        key: "{{github_keys}}"
 
 - name: Add Web User, Install Docker, Docker Compose
   roles:
