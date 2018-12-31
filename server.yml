@@ -1,25 +1,32 @@
 ---
 
 - name: Create a login user
-    hosts: all
-    remote_user: root
-    user:
-    name: "{{web_user}}"
-    # # a hash created with: mkpasswd `gem install mkpasswd` and "mkpasswd -m sha-512 "password" | sed 's/\$/\\$/g'
-    password: "{{ upassword | password_hash('sha512') }}"
-    groups: # Empty by default, here we give it some groups
-    - docker
-    - sudo
-    state: present
-    shell: /bin/bash       # Defaults to /bin/bash
-    system: no             # Defaults to no
-    createhome: yes        # Defaults to yes
-    home: /home/web  # Defaults to /home/<username>
-    authorized_key: 
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: sudo user creation
+      user: 
+        name: "{{web_user}}"
+        # a hash can be manually created with: mkpasswd `gem install mkpasswd` and "mkpasswd -m sha-512 "password" | sed 's/\$/\\$/g'
+        # here we use `pip install passlib` instead for automatic generation
+        password: "{{ upassword | password_hash('sha512') }}"
+        groups: # Empty by default, here we give it some groups
+        - docker
+        - sudo
+        state: present
+        shell: /bin/bash       # Defaults to /bin/bash
+        system: no             # Defaults to no
+        createhome: yes        # Defaults to yes
+        home: /home/web  # Defaults to /home/<username>
+        # https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
+    - name: keys additions
+      authorized_key: 
         user: "{{web_user}}"
         key: "{{github_keys}}"
 
-- name: Add Web User, Install Docker, Docker Compose
+- name: Install Docker, Docker Compose
+  hosts: all
+  remote_user: root
   roles:
     - geerlingguy.docker
     - weareinteractive.ufw
