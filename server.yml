@@ -2,6 +2,7 @@
 
 # ansible-playbook server.yml --syntax-check
 # ansible -v all -m ping -e 'ansible_python_interpreter=/usr/bin/python3'
+# ansible-playbook server.yml
 
 - name: Set ansible_python_interpreter
   hosts: all
@@ -22,7 +23,6 @@
         # here we use `pip install passlib` instead for automatic generation
         password: "{{ upassword | password_hash('sha512') }}"
         groups: # Empty by default, here we give it some groups
-        - web
         - sudo
         state: present
         shell: /bin/bash       # Defaults to /bin/bash
@@ -44,4 +44,5 @@
   vars: 
     # https://github.com/docker/compose/releases
     docker_compose_version: "1.23.2"
-    docker_users: "{{web_user}}"
+    docker_users:
+      - web
