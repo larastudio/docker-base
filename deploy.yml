@@ -19,6 +19,7 @@
       git:
         repo: 'https://github.com/Larastudio/lslaravel.git'
         dest: /home/web/laravel/
+        force: yes
 
 - name: Ensure directories are 0755 and files 0644
   hosts: all
