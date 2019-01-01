@@ -16,7 +16,7 @@ An extra user for deployment and sudo tasks is setup using the Ansible User modu
 
 Both Docker and Docker Compose are setup with Geerlingguy's Docker role. You can adjust the composer version in the `server.yml` where it currently overrides the default version.
 
-# Swapfile
+## Swapfile
 
 We use Oefenweb's Swapfile to add more memory to the server. This way we can keep on using the cheap $5 / month Droplet and run composer and so on without issues.
 
