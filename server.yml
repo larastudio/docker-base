@@ -46,3 +46,13 @@
     docker_compose_version: "1.23.2"
     docker_users:
       - web
+    ufw_rules:
+      - { port: 22, rule: allow, comment: 'Allow SSH' }
+      - { port: 80, rule: allow }
+      - { port: 443, rule: allow }
+      - { from_ip: '127.0.0.1/8', comment: 'Allow localhost' }
+      - { from_ip: '127.0.42.0/24', rule: deny }
+    ufw_default_forward_policy: ACCEPT
+    ufw_logging: full
+    ufw_applications:
+     - { name: "OpenSSH" }
