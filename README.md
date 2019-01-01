@@ -31,3 +31,5 @@ Do not forget to add `group_vars/all.yml`. Here are example vars you can adjust:
 
 We have added a basic deployment from Github repo as well. You can simply do this using this command `ansible-playbook deploy.yml` This as we could not with ease use deployer for the current setup. Base server does not run PHP, a container does. As Deployer has no solution for this yet we will use Ansible deployment for now.
 
+Post deployment you do need to do a `composer install` and `npm install` inside the Laradock workspace . Access it using `docker-compose -f prod-docker-compose.yml  exec --user=laradock workspace bash`
+
