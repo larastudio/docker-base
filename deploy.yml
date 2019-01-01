@@ -1,0 +1,22 @@
+---
+
+# ansible-playbook deploy.yml --syntax-check
+# ansible -v all -m ping -e 'ansible_python_interpreter=/usr/bin/python3'
+# ansible-playbook deploy.yml
+
+- name: Set ansible_python_interpreter
+  hosts: all
+  gather_facts: false
+  become: yes
+  roles:
+    - { role: python_interpreter, tags: [always] }
+
+- name: Deploy Laravel App
+  hosts: all
+  remote_user: web
+  tasks:
+    - name: Pull files from source
+      git:
+        repo: 'https://github.com/Larastudio/lslaravel.git'
+        dest: /home/web/laravel/
+
