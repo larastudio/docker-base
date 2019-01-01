@@ -27,7 +27,7 @@ Do not forget to add `group_vars/all.yml`. Here are example vars you can adjust:
 - web_user: web
 - github_keys: https://github.com/jasperf.keys
 
-## Deployment
+# Deployment
 
-We have added a basic deployment from Github repo as well. This as we could not with ease use deployer for the current setup. Base server does not run PHP, a container does. As Deployer has no solution for this yet we will use Ansible deployment for now.
+We have added a basic deployment from Github repo as well. You can simply do this using this command `ansible-playbook deploy.yml` This as we could not with ease use deployer for the current setup. Base server does not run PHP, a container does. As Deployer has no solution for this yet we will use Ansible deployment for now.
 
