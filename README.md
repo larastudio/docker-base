@@ -13,4 +13,13 @@ An extra user for deployment and sudo tasks is setup using the Ansible User modu
 
 ## Docker and Docker Compose
 
-Both Docker and Docker Compose are setup with Geerlingguy's Docker role. You can adjust the composer version in the server.yml where it currently overrides the default version.
+Both Docker and Docker Compose are setup with Geerlingguy's Docker role. You can adjust the composer version in the `server.yml` where it currently overrides the default version.
+
+## Variables
+
+Do not forget to adjust the vars:
+- upassword: password
+- web_user: web
+- github_keys: https://github.com/jasperf.keys
+
+in `group_vars/all.yml`
