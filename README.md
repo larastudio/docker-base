@@ -4,6 +4,7 @@ Docker Base setup Ansible Playbook to get you quickly up and running with server
 - deployer / sudo user
 - ufw firewall
 - Docker Engine and Docker Compose
+- Swapfile
 
 ## Ubuntu 18.0.4
 This base is created as an Ansible book so Laradock and the Laravel app of choice can be added to an Ubuntu 18.0.4 image with basic setup done. This version is also the latest Docker can work with at the moment. We tend to set up a Digital Ocean Droplet with Ubuntu 18.0.4 and attach our own id_rsa public key to it so we have a root user with our SSH key up and running. From there on you can use this playbook.
@@ -14,6 +15,10 @@ An extra user for deployment and sudo tasks is setup using the Ansible User modu
 ## Docker and Docker Compose
 
 Both Docker and Docker Compose are setup with Geerlingguy's Docker role. You can adjust the composer version in the `server.yml` where it currently overrides the default version.
+
+# Swapfile
+
+We use Oefenweb's Swapfile to add more memory to the server. This way we can keep on using the cheap $5 / month Droplet and run composer and so on without issues.
 
 ## Variables
 
