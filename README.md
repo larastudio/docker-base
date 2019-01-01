@@ -17,9 +17,8 @@ Both Docker and Docker Compose are setup with Geerlingguy's Docker role. You can
 
 ## Variables
 
-Do not forget to adjust the vars:
+Do not forget to add `group_vars/all.yml`. Here are example vars you can adjust:
 - upassword: password
 - web_user: web
 - github_keys: https://github.com/jasperf.keys
 
-in `group_vars/all.yml`
