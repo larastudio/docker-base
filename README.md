@@ -1,12 +1,12 @@
 # Docker Base
 
-Docker Base setup with: 
+Docker Base setup Ansible Playbook to get you quickly up and running with server basics to run your Docker containers on. This Playbook has: 
 - deployer / sudo user
 - ufw firewall
 - Docker Engine and Docker Compose
 
 ## Ubuntu 18.0.4
-This base is created as an Ansible book so Laradock and the Laravel app of choice can be added to an Ubuntu 18.0.4 image with basic setup done. This version is also the latest Docker can work with at the moment.
+This base is created as an Ansible book so Laradock and the Laravel app of choice can be added to an Ubuntu 18.0.4 image with basic setup done. This version is also the latest Docker can work with at the moment. We tend to set up a Digital Ocean Droplet with Ubuntu 18.0.4 and attach our own id_rsa public key to it so we have a root user with our SSH key up and running. From there on you can use this playbook.
 
 ## Deployment User
 An extra user for deployment and sudo tasks is setup using the Ansible User module. With this setup you can deploy as a web user with ssh access. You can also use the same user used for deployment as an admin user. You could of course set up a secondary admin user as well, but I have decided to not do that just yet.
