@@ -20,3 +20,11 @@
         repo: 'https://github.com/Larastudio/lslaravel.git'
         dest: /home/web/laravel/
 
+- name: Ensure directories are 0755 and files 0644
+  hosts: all
+  remote_user: web
+  tasks:
+    - name: Ensure directories are 0755
+      command: find /home/web/laravel -type d -exec chmod 0755 {} \;
+    - name: Ensure files are 0644
+      command: find /home/web/laravel -type f -exec chmod 0644 {} \;
