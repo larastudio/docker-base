@@ -41,6 +41,7 @@
   roles:
     - geerlingguy.docker
     - weareinteractive.ufw
+    - oefenweb.swapfile
   vars: 
     # https://github.com/docker/compose/releases
     docker_compose_version: "1.23.2"
@@ -56,3 +57,5 @@
     ufw_logging: full
     ufw_applications:
      - { name: "OpenSSH" }
+    swapfile_size: 4GB
+    swapfile_swappiness: 10
