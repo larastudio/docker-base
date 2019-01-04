@@ -46,6 +46,8 @@ We have introduced a new deployment role based on made by Blacklight. This shoul
 
 **NB** The path is relative to your playbook file.
 
+**laravel_composer_install:** defaults to true
+
 **laravel_composer_path** (Defaults: false) -The path to an existing composer installation. If set to false, the role will automatically download composer into the projects root directory.
 
 **laravel_composer_options** (Defaults: --no-dev --no-interaction --optimize-autoloader) -Flags to add to the composer install command.

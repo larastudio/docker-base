@@ -10,7 +10,6 @@
   become: yes
   roles:
     - { role: python_interpreter, tags: [always] }
-    - jasperf.laravel5deploy
 
 - name: Deploy app
   hosts: all
@@ -20,5 +19,4 @@
   vars:
     laravel_root_dir: /home/web/laravel
     laravel_repo: git@github.com:Larastudio/lslaravel.git
-    laravel_composer_options: '--no-dev --optimize-autoloader --no-interaction'
-    ansible_ssh_user: root
+    laravel_composer_install: false
