@@ -1,8 +1,0 @@
-# Release commands role for Laravel5 apps.
-# License: MIT
-#
-# Handles per release directory commands like migrations, etc.
----
-- name: Run release artisan command
-  shell: cd {{ laravel_root_dir }}/releases/{{ release_version.stdout }} && {{ laravel_php_path }} artisan {{ item }}
-  with_items: "{{ laravel_release_artisan_commands }}"
