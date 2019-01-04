@@ -1,0 +1,41 @@
+# Deployment role for Laravel5 apps.
+# Brought to you by Blacklight - http://www.blacklight.co.za/.
+# Developer: Zander Janse van Rensburg <zjvren@geevcookie.com>
+# License: MIT
+#
+# Handles the creation of the deployment and shared directories.
+---
+- name: Get release version.
+  shell: date +%s
+  register: release_version
+
+- name: Create the shared directory.
+  file: state=directory path={{ laravel_root_dir }}/shared
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/logs directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/logs
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/framework directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/framework
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/framework/cache directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/framework/cache
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/framework/views directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/framework/views
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/framework/sessions directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/framework/sessions
+  when: laravel_create_shared_directories == true
+
+- name: Create the shared storage/app/public directory.
+  file: state=directory path={{ laravel_root_dir }}/shared/storage/app/public
+  when: laravel_create_shared_directories == true
+
+- name: Create the release directory.
+  file: state=directory path={{ laravel_root_dir }}/releases/{{ release_version.stdout }}
