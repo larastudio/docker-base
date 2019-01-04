@@ -32,5 +32,5 @@ Do not forget to add `group_vars/all.yml`. Here are example vars you can adjust:
 
 We have introduced a new deployment role based on made by Blacklight. This should allow us to mimick Deployer and deploy without interruption using releases.
 
-Post deployment you do need to do a `composer install` and `npm install` inside the Laradock workspace . Access it using `docker-compose -f prod-docker-compose.yml  exec --user=laradock workspace bash` . We are working on avoiding this altogher with `docker exec`
+Post deployment you do need to do a `composer install` and `npm install` inside the Laradock workspace . Access it using `docker-compose -f prod-docker-compose.yml  exec --user=laradock workspace bash` . We are working on avoiding this altogether with `docker exec` or `docker-compose exec..`
 
