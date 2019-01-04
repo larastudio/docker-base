@@ -10,22 +10,15 @@
   become: yes
   roles:
     - { role: python_interpreter, tags: [always] }
+    - jasperf.laravel5deploy
 
-- name: Deploy Laravel App
+- name: Deploy app
   hosts: all
   remote_user: web
-  tasks:
-    - name: Pull files from source
-      git:
-        repo: 'https://github.com/Larastudio/lslaravel.git'
-        dest: /home/web/laravel/
-        force: yes
-
-- name: Ensure directories are 0755 and files 0644
-  hosts: all
-  remote_user: web
-  tasks:
-    - name: Ensure directories are 0755
-      command: find /home/web/laravel -type d -exec chmod 0755 {} \;
-    - name: Ensure files are 0644
-      command: find /home/web/laravel -type f -exec chmod 0644 {} \;
+  roles:
+    - jasperf.laravel5deploy
+  vars:
+    laravel_root_dir: /home/web/laravel
+    laravel_repo: git@github.com:Larastudio/lslaravel.git
+    laravel_composer_options: '--no-dev --optimize-autoloader --no-interaction'
+    ansible_ssh_user: root
