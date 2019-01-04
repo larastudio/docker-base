@@ -5,6 +5,7 @@ Docker Base setup Ansible Playbook to get you quickly up and running with server
 - ufw firewall
 - Docker Engine and Docker Compose
 - Swapfile
+- Deployment
 
 ## Ubuntu 18.0.4
 This base is created as an Ansible book so Laradock and the Laravel app of choice can be added to an Ubuntu 18.0.4 image with basic setup done. This version is also the latest Docker can work with at the moment. We tend to set up a Digital Ocean Droplet with Ubuntu 18.0.4 and attach our own id_rsa public key to it so we have a root user with our SSH key up and running. From there on you can use this playbook.
@@ -29,7 +30,7 @@ Do not forget to add `group_vars/all.yml`. Here are example vars you can adjust:
 
 # Deployment
 
-We have added a basic deployment from Github repo as well. You can simply do this using this command `ansible-playbook deploy.yml` This as we could not with ease use deployer for the current setup. Base server does not run PHP, a container does. As Deployer has no solution for this yet we will use Ansible deployment for now.
+We have introduced a new deployment role based on made by Blacklight. This should allow us to mimick Deployer and deploy without interruption using releases.
 
-Post deployment you do need to do a `composer install` and `npm install` inside the Laradock workspace . Access it using `docker-compose -f prod-docker-compose.yml  exec --user=laradock workspace bash`
+Post deployment you do need to do a `composer install` and `npm install` inside the Laradock workspace . Access it using `docker-compose -f prod-docker-compose.yml  exec --user=laradock workspace bash` . We are working on avoiding this altogher with `docker exec`
 
