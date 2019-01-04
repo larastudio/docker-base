@@ -17,6 +17,7 @@
   roles:
     - jasperf.laravel5deploy
   vars:
+    laravel_strategy: git
     laravel_root_dir: /home/web/laravel
     laravel_repo: git@github.com:Larastudio/lslaravel.git
     laravel_composer_install: false
