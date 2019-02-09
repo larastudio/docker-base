@@ -3,3 +3,4 @@ server.retry
 deploy.retry
 group_vars/all.yml
 .DS_Store
+traefik.toml
